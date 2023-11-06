@@ -1,0 +1,11 @@
+**/.git
+**/.DS_Store
+*.log
+dockerfile*
+
+*test.go
+
+.dockerignore
+.git
+.gitignore
+.vscode
