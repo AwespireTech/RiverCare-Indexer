@@ -3,13 +3,32 @@ package tezos
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
+	"net/http"
+	"net/url"
 	"time"
 
 	"blockwatch.cc/tzgo/micheline"
 	"blockwatch.cc/tzgo/tezos"
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
+	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
 )
 
+func GetRiverList(bigmapid string) ([]string, error) {
+	query := url.Values{}
+	query.Add("active", "true")
+	query.Add("select", "key")
+	req, err := http.Get(config.TZKT_API_URL + "/bigmaps/" + bigmapid + "/keys" + "?" + query.Encode())
+	if err != nil {
+		return nil, err
+	}
+	var keys []string
+	err = json.NewDecoder(req.Body).Decode(&keys)
+	if err != nil {
+		return nil, err
+	}
+	return keys, nil
+}
 func GetRiverByAddress(address string) (models.River, error) {
 	var river models.River
 	client := GetClient()
@@ -32,8 +51,12 @@ func GetRiverByAddress(address string) (models.River, error) {
 	river.Description = string(buf)
 
 	river.Agreement, _ = val.GetString("agreement_uri")
+	buf, _ = hex.DecodeString(river.Agreement)
+	river.Agreement = string(buf)
 
 	river.Dataset, _ = val.GetString("dataset_uri")
+	buf, _ = hex.DecodeString(river.Dataset)
+	river.Dataset = string(buf)
 
 	gen, _ := val.GetInt64("info.generation")
 	river.Generation = int(gen)
@@ -56,11 +79,12 @@ func GetRiverByAddress(address string) (models.River, error) {
 	if err == nil {
 		river.EventData = events
 	}
-	// owners, err := GetOwners(river.TokenContract, river.TokenId)
-	// if err != nil {
-	// 	return river, err
-	// }
-	// river.Owners = owners
+	owners, err := GetOwners(river.TokenContract, river.TokenId)
+	if err != nil {
+		return river, err
+	}
+	river.Owners = owners
+	river.OwnersCount = len(owners)
 
 	return river, err
 }

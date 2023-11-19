@@ -32,3 +32,14 @@ func ResetDatabase() error {
 	err := database.Drop(context.Background())
 	return err
 }
+func AutoIncreamentId(collection string) int {
+	db := client.Database("InterfaceForCare").Collection("autoIncreament")
+	var result struct {
+		Seq int `bson:"seq"`
+	}
+	err := db.FindOneAndUpdate(context.Background(), nil, map[string]interface{}{"$inc": map[string]interface{}{"seq": 1}}, options.FindOneAndUpdate().SetUpsert(true)).Decode(&result)
+	if err != nil {
+		panic(err)
+	}
+	return result.Seq
+}
