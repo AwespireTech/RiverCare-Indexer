@@ -16,5 +16,6 @@ func main() {
 	for _, river := range res {
 		tezos.PrintContractStorage(river)
 	}
+	tezos.Monitor()
 
 }
