@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"blockwatch.cc/tzgo/micheline"
+	"blockwatch.cc/tzgo/tezos"
 	"github.com/AwespireTech/InterfaceForCare-Backend/models"
 )
 
@@ -41,10 +42,37 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 			event.Amount = -1
 		}
 		event.CreatedTime, _ = val.GetTime("3")
-		event.Host, _ = val.GetString("6")
+		host, _ := val.GetAddress("6")
+		event.Host = host.String()
+		appr, _ := val.GetValue("1")
+		approvers, _ := appr.([]interface{})
+		approvals := make([]string, 0)
+		for _, approver := range approvers {
+			tmp := approver.(tezos.Address)
+			approvals = append(approvals, tmp.String())
+		}
+		event.Approvals = approvals
+		event.ApprovalsCount = len(event.Approvals)
 		tid, _ := val.GetBig("7")
 		event.TokenId = int(tid.Int64())
+		event.TokenContract = river.TokenContract
+		owners, err := GetOwners(river.TokenContract, event.TokenId)
+
+		if err != nil {
+			return nil, err
+		}
+		event.Participants = owners
+		event.ParticipantsCount = len(owners)
+		gen, _ := val.GetInt64("4")
+		event.Generation = int(gen)
 		events = append(events, event)
+		status, _ := val.GetBool("5")
+		if status {
+			event.Status = 1
+		} else {
+			event.Status = 0
+		}
+
 	}
 	return events, nil
 }
