@@ -26,7 +26,7 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 	var events []models.Event
 	for _, key := range keys {
 		var event models.Event
-		event.ID = strconv.Itoa(river.ID) + "-" + key.String()
+		event.ID = river.ID + "-" + key.String()
 		bigval, err := client.GetActiveBigmapValue(context.Background(), bigMapId, key)
 		if err != nil {
 			continue
