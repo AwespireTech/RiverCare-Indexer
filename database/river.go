@@ -23,7 +23,7 @@ func InsertRiver(river models.River) (*mongo.InsertOneResult, error) {
 
 func UpdateRiver(river models.River) (*mongo.UpdateResult, error) {
 	collection := client.Database(config.DATABASE_NAME).Collection("river")
-	return collection.UpdateOne(context.Background(), bson.M{"_id": river.ID}, bson.M{"$set": river})
+	return collection.ReplaceOne(context.Background(), bson.M{"_id": river.ID}, river, options.Replace().SetUpsert(true))
 }
 func UpdateProposal(proposal models.Proposal) (*mongo.UpdateResult, error) {
 	collection := client.Database(config.DATABASE_NAME).Collection("proposal")

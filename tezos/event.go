@@ -2,9 +2,6 @@ package tezos
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"strconv"
 
 	"blockwatch.cc/tzgo/micheline"
 	"blockwatch.cc/tzgo/tezos"
@@ -32,9 +29,9 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 			continue
 		}
 		val := micheline.NewValue(micheline.NewType(info.ValueType), bigval)
-		m, _ := val.Map()
-		buf, _ := json.MarshalIndent(m, "", "  ")
-		fmt.Println(string(buf))
+		// m, _ := val.Map()
+		// buf, _ := json.MarshalIndent(m, "", "  ")
+		// fmt.Println(string(buf))
 		amount, isLimited := val.GetInt64("0")
 		if isLimited {
 			event.Amount = int(amount)
@@ -65,13 +62,13 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 		event.ParticipantsCount = len(owners)
 		gen, _ := val.GetInt64("4")
 		event.Generation = int(gen)
-		events = append(events, event)
 		status, _ := val.GetBool("5")
 		if status {
 			event.Status = 1
 		} else {
 			event.Status = 0
 		}
+		events = append(events, event)
 
 	}
 	return events, nil

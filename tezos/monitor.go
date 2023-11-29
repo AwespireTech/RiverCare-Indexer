@@ -33,6 +33,7 @@ func FullUpdate() error {
 		return err
 	}
 	for _, address := range list {
+		fmt.Println(address)
 		river, err := GetRiverByAddress(address)
 		if err != nil {
 			return err
@@ -56,10 +57,10 @@ func Monitor() {
 		}
 		fmt.Println(block.Hash)
 
-		// err = FullUpdate()
-		// if err != nil {
-		// 	log.Panicln(err)
-		// }
+		err = FullUpdate()
+		if err != nil {
+			log.Panicln(err)
+		}
 	}
 
 }
@@ -103,6 +104,11 @@ func UpdateRiver(river models.River) error {
 		if err != nil {
 			return err
 		}
+	}
+	//Update River
+	_, err := database.UpdateRiver(river)
+	if err != nil {
+		return err
 	}
 	return nil
 

@@ -42,7 +42,7 @@ func GetRiverByAddress(address string) (models.River, error) {
 	}
 	val := micheline.NewValue(script.StorageType(), script.Storage)
 
-	river.ID = 1
+	river.ID = address
 	river.Name, _ = val.GetString("info.name")
 	buf, _ := hex.DecodeString(river.Name)
 	river.Name = string(buf)
@@ -78,6 +78,12 @@ func GetRiverByAddress(address string) (models.River, error) {
 	events, err := GetAllEventsByBigmap(event_bigmap, river)
 	if err == nil {
 		river.EventData = events
+	}
+	//Get Proposals
+	proposal_bigmap, _ := val.GetInt64("proposal.proposals")
+	proposals, err := GetAllProposalsByBigmap(proposal_bigmap, river)
+	if err == nil {
+		river.ProposalData = proposals
 	}
 	owners, err := GetOwners(river.TokenContract, river.TokenId)
 	if err != nil {
