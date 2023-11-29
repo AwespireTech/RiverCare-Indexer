@@ -19,6 +19,7 @@ var (
 	AKASWAP_API_URL string
 	TZKT_API_URL    string
 	DATABASE_URL    string
+	DATABASE_NAME   string
 	FACTORY_BIGMAP  string
 	MODE            int
 )
@@ -34,6 +35,11 @@ func init() {
 		databaseCred = os.Getenv("DATABASE_USERNAME") + ":" + os.Getenv("DATABASE_PASSWORD") + "@"
 	} else {
 		databaseCred = ""
+	}
+	if os.Getenv("DATABASE_NAME") != "" {
+		DATABASE_NAME = os.Getenv("DATABASE_NAME")
+	} else {
+		DATABASE_NAME = "InterfaceForCare"
 	}
 	DATABASE_URL = "mongodb://" + databaseCred + os.Getenv("DATABASE_HOST")
 }

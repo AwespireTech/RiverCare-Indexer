@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	database.Init("mongodb://admin:V0FZoSHM1gUSRcx8UkTMiQ1HYWTAmC11@35.194.208.220:27017")
+	database.Init(config.DATABASE_URL)
 	tezos.Init(config.RPCURL)
 	res, err := tezos.GetRiverList(config.FACTORY_BIGMAP)
 	if err != nil {

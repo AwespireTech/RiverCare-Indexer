@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -28,12 +29,12 @@ func GetClient() *mongo.Client {
 	return client
 }
 func ResetDatabase() error {
-	database := client.Database("InterfaceForCare")
+	database := client.Database(config.DATABASE_NAME)
 	err := database.Drop(context.Background())
 	return err
 }
 func AutoIncreamentId(collection string) int {
-	db := client.Database("InterfaceForCare").Collection("autoIncreament")
+	db := client.Database(config.DATABASE_NAME).Collection("autoIncreament")
 	var result struct {
 		Seq int `bson:"seq"`
 	}
