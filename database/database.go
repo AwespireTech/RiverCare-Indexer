@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

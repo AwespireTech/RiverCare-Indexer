@@ -39,7 +39,7 @@ func init() {
 	if os.Getenv("DATABASE_NAME") != "" {
 		DATABASE_NAME = os.Getenv("DATABASE_NAME")
 	} else {
-		DATABASE_NAME = "InterfaceForCare"
+		DATABASE_NAME = "RiverCare"
 	}
 	DATABASE_URL = "mongodb://" + databaseCred + os.Getenv("DATABASE_HOST")
 }

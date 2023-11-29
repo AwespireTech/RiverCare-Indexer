@@ -7,9 +7,9 @@ import (
 	"log"
 
 	"blockwatch.cc/tzgo/rpc"
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/database"
+	"github.com/AwespireTech/RiverCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Indexer/database"
 )
 
 func PrintContractStorage(address string) {

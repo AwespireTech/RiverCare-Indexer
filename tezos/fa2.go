@@ -6,7 +6,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
 )
 
 type AccountInfo struct {

@@ -3,8 +3,8 @@ package database
 import (
 	"context"
 
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 

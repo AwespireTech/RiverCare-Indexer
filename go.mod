@@ -1,10 +1,10 @@
-module github.com/AwespireTech/InterfaceForCare-Indexer
+module github.com/AwespireTech/RiverCare-Indexer
 
 go 1.21
 
 require (
 	blockwatch.cc/tzgo v1.17.3
-	github.com/AwespireTech/InterfaceForCare-Backend v0.0.0-20231129031913-a86be088aeba
+	github.com/AwespireTech/RiverCare-Backend v0.0.0-20231129043421-d8321be581b8
 	github.com/joho/godotenv v1.5.1
 	go.mongodb.org/mongo-driver v1.13.0
 )

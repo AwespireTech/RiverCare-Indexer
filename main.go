@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/database"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/tezos"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Indexer/database"
+	"github.com/AwespireTech/RiverCare-Indexer/tezos"
 )
 
 func main() {

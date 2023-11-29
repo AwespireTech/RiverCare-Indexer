@@ -10,8 +10,8 @@ import (
 
 	"blockwatch.cc/tzgo/micheline"
 	"blockwatch.cc/tzgo/tezos"
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
-	"github.com/AwespireTech/InterfaceForCare-Indexer/config"
+	"github.com/AwespireTech/RiverCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
 )
 
 func GetRiverList(bigmapid string) ([]string, error) {

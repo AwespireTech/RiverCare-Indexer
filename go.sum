@@ -1,7 +1,7 @@
 blockwatch.cc/tzgo v1.17.3 h1:pSq37ZiuTntn8Uk01mXSiq+cKFwqFhwIDp4INxO4J0M=
 blockwatch.cc/tzgo v1.17.3/go.mod h1:LrzMgi6xieEuZuNfE2chu6YHNc3P3PP7ld9xJ97umtE=
-github.com/AwespireTech/InterfaceForCare-Backend v0.0.0-20231129031913-a86be088aeba h1:SY1d7DIazYHIwxXHEW3Ww3/dnwzuUtiK6F7dmmbXDhg=
-github.com/AwespireTech/InterfaceForCare-Backend v0.0.0-20231129031913-a86be088aeba/go.mod h1:mQ5diOyhnvCKEsBeHfnARqOUWNVVeay8DHGTBzoZmDA=
+github.com/AwespireTech/RiverCare-Backend v0.0.0-20231129043421-d8321be581b8 h1:su10yJsNGG6DX8dkVZ+slMBVQjyUgVdxKWrZt/zrtu0=
+github.com/AwespireTech/RiverCare-Backend v0.0.0-20231129043421-d8321be581b8/go.mod h1:U5CM9833MmGiZ8sLiM2g6p66A3d1EWIGpa88HA4ZusM=
 github.com/creack/pty v1.1.9/go.mod h1:oKZEueFk5CKHvIhNR5MUki03XCEU+Q6VDXinZuGJ33E=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

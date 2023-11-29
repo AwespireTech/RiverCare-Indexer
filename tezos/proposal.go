@@ -7,7 +7,7 @@ import (
 
 	"blockwatch.cc/tzgo/micheline"
 	"blockwatch.cc/tzgo/tezos"
-	"github.com/AwespireTech/InterfaceForCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Backend/models"
 )
 
 func decodeContent(content interface{}) (int, map[string]interface{}, error) {
