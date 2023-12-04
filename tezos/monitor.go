@@ -90,6 +90,21 @@ func UpdateRiver(river models.River) error {
 		if err != nil {
 			return err
 		}
+		//Update EventTokenHistory
+		for _, owner := range event.Participants {
+			hist := models.EventHistory{
+				RiverId:       river.ID,
+				EventId:       event.ID,
+				User:          owner,
+				TokenContract: event.TokenContract,
+				TokenId:       event.TokenId,
+				Generation:    event.Generation,
+			}
+			err = database.UpdateEventHistory(hist)
+			if err != nil {
+				return err
+			}
+		}
 	}
 	//Update TokenHistory
 	for _, owner := range river.Owners {
