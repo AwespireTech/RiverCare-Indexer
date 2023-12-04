@@ -3,11 +3,16 @@ package tezos
 import (
 	"context"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
+	"net/http"
+	"net/url"
+	"strconv"
 
 	"blockwatch.cc/tzgo/micheline"
 	"blockwatch.cc/tzgo/tezos"
 	"github.com/AwespireTech/RiverCare-Backend/models"
+	"github.com/AwespireTech/RiverCare-Indexer/config"
 )
 
 func decodeContent(content interface{}) (int, map[string]interface{}, error) {
@@ -54,7 +59,17 @@ func decodeContent(content interface{}) (int, map[string]interface{}, error) {
 
 func GetAllProposalsByBigmap(bigMapId int64, river models.River) ([]models.Proposal, error) {
 	client := GetClient()
-	keys, err := client.ListActiveBigmapKeys(context.Background(), bigMapId)
+
+	query := url.Values{}
+	query.Add("active", "true")
+	query.Add("select", "key,hash")
+	query.Add("limit", "10000")
+	req, err := http.Get(config.TZKT_API_URL + "/bigmaps/" + strconv.FormatInt(bigMapId, 10) + "/keys" + "?" + query.Encode())
+	if err != nil {
+		return nil, err
+	}
+	var keys []map[string]string
+	err = json.NewDecoder(req.Body).Decode(&keys)
 	if err != nil {
 		return nil, err
 	}
@@ -68,8 +83,12 @@ func GetAllProposalsByBigmap(bigMapId int64, river models.River) ([]models.Propo
 	for _, key := range keys {
 		var proposal models.Proposal
 
-		proposal.ID = river.ID + "-" + key.String()
-		bigval, err := client.GetActiveBigmapValue(context.Background(), bigMapId, key)
+		hash, err := tezos.ParseExprHash(key["hash"])
+		if err != nil {
+			continue
+		}
+		proposal.ID = river.ID + "-" + key["key"]
+		bigval, err := client.GetActiveBigmapValue(context.Background(), bigMapId, hash)
 		if err != nil {
 			continue
 		}
