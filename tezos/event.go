@@ -2,6 +2,7 @@ package tezos
 
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"net/http"
 	"net/url"
@@ -12,6 +13,40 @@ import (
 	"github.com/AwespireTech/RiverCare-Backend/models"
 	"github.com/AwespireTech/RiverCare-Indexer/config"
 )
+
+func getEventTokenMetadata(tokenId int) (map[string]string, error) {
+	bigMapId := config.TOKEN_METADATA_BIGMAP
+	req, err := http.Get(config.TZKT_API_URL + "/bigmaps/" + bigMapId + "/keys/" + strconv.Itoa(tokenId))
+	if err != nil {
+		return nil, err
+	}
+	var data map[string]interface{}
+	err = json.NewDecoder(req.Body).Decode(&data)
+	if err != nil {
+		return nil, err
+	}
+	data = data["value"].(map[string]interface{})
+	data = data["token_info"].(map[string]interface{})
+
+	res := make(map[string]string)
+	buf, err := hex.DecodeString(data["name"].(string))
+	if err != nil {
+		return nil, err
+	}
+	res["name"] = string(buf)
+	buf, err = hex.DecodeString(data["description"].(string))
+	if err != nil {
+		return nil, err
+	}
+	res["description"] = string(buf)
+	buf, err = hex.DecodeString(data["displayUri"].(string))
+	if err != nil {
+		return nil, err
+	}
+	res["displayUri"] = string(buf)
+
+	return res, nil
+}
 
 func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, error) {
 	client := GetClient()
@@ -45,6 +80,7 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 			continue
 		}
 		event.ID = river.ID + "-" + key["key"]
+
 		bigval, err := client.GetActiveBigmapValue(context.Background(), bigMapId, hash)
 		if err != nil {
 			continue
@@ -74,8 +110,16 @@ func GetAllEventsByBigmap(bigMapId int64, river models.River) ([]models.Event, e
 		tid, _ := val.GetBig("7")
 		event.TokenId = int(tid.Int64())
 		event.TokenContract = river.TokenContract
-		owners, err := GetOwners(river.TokenContract, event.TokenId)
 
+		data, err := getEventTokenMetadata(event.TokenId)
+		if err != nil {
+			return nil, err
+		}
+		event.Name = data["name"]
+		event.Description = data["description"]
+		event.ImageUri = data["displayUri"]
+
+		owners, err := GetOwners(river.TokenContract, event.TokenId)
 		if err != nil {
 			return nil, err
 		}

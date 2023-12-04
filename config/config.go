@@ -15,13 +15,14 @@ const (
 
 var (
 	// RPCURL is the url of the tezos node
-	RPCURL          string
-	AKASWAP_API_URL string
-	TZKT_API_URL    string
-	DATABASE_URL    string
-	DATABASE_NAME   string
-	FACTORY_BIGMAP  string
-	MODE            int
+	RPCURL                string
+	AKASWAP_API_URL       string
+	TZKT_API_URL          string
+	DATABASE_URL          string
+	DATABASE_NAME         string
+	FACTORY_BIGMAP        string
+	TOKEN_METADATA_BIGMAP string
+	MODE                  int
 )
 
 func init() {
@@ -30,6 +31,7 @@ func init() {
 	TZKT_API_URL = os.Getenv("TZKT_API_URL")
 	MODE = DRYRUN
 	FACTORY_BIGMAP = os.Getenv("FACTORY_BIGMAP")
+	TOKEN_METADATA_BIGMAP = os.Getenv("TOKEN_METADATA_BIGMAP")
 	var databaseCred string
 	if os.Getenv("DATABASE_USERNAME") != "" && os.Getenv("DATABASE_PASSWORD") != "" && os.Getenv("DATABASE_HOST") != "" {
 		databaseCred = os.Getenv("DATABASE_USERNAME") + ":" + os.Getenv("DATABASE_PASSWORD") + "@"
